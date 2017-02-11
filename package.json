@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"babel-node src/race.js",
+    "start":"babel-node src/race.js ",
     "debug": "babel-node src/race.js --source-maps --inspect --debug-brk "
   },
   "dependencies": {
