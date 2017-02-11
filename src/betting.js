@@ -18,7 +18,7 @@ function setupIteration(index) {
         total_bet_amt,
         win: [],
         lose: [],
-        max_lose_by: -1,
+        max_lose_by: undefined,
         max_lose_amt: undefined
     }
     bet_results.push(bet_result)
@@ -29,30 +29,31 @@ function iteration(bet_result) {
     //iteratee is invoked with four arguments (accumulator, value, index|key, collection).
     bet_result = _(bet_slip).reduce((acc, val, index) => {
         const iter_payout = val.odds * val.amt
-        const iter_amt = parseFloat((iter_payout- acc.total_bet_amt).toFixed(2))
+        const iter_amt = parseFloat((iter_payout - acc.total_bet_amt).toFixed(2))
 
         //put horse into busket
         const result_busket = iter_amt >= 0 ? acc.win : acc.lose
-        result_busket.push({ horse_num: index + 1, odds: val.odds, bet_amt:val.amt, potential_win_amt: iter_amt })
+        result_busket.push({ horse_num: index + 1, odds: val.odds, bet_amt: val.amt, potential_win_amt: iter_amt })
 
-
-        //re-calculate the max lose amount;
-        //need to adjust bet amount for the horse that cause max lose amount
-        const maxLoseAmt = getMaxVal(acc.max_lose_amt, iter_amt * -1)
-        //console.log(`horse#${index}  (getMax(current_lose_amt:${iter_amt} , acc_lose_amt:${acc.amt}) ==>  returns:${maxLoseAmt}`)
-        if (maxLoseAmt !== acc.max_lose_amt) {
-            acc.max_lose_amt = maxLoseAmt;
-            acc.max_lose_by = index + 1;
+        if (iter_amt < 0) { //lose bet, need to adjust max_lose_amt
+            //re-calculate the max lose amount;
+            //need to adjust bet amount for the horse that cause max lose amount
+            const maxLoseAmt = getMaxVal(acc.max_lose_amt, iter_amt * -1)
+            //console.log(`horse#${index}  (getMax(current_lose_amt:${iter_amt} , acc_lose_amt:${acc.amt}) ==>  returns:${maxLoseAmt}`)
+            if (maxLoseAmt !== acc.max_lose_amt) {
+                acc.max_lose_amt = maxLoseAmt;
+                acc.max_lose_by = index + 1;
+            }
         }
         return acc
     }, bet_result)
-    bet_result.summary=`win ${bet_result.win.length} -- lose ${bet_result.lose.length}`
+    bet_result.summary = `win ${bet_result.win.length} -- lose ${bet_result.lose.length}`
     console.log(`bet result: ${JSON.stringify(bet_result)}`)
 }
 
 
 function afterIteration(bet_result) {
-    if (bet_result.max_lose_amt <= 0) {
+    if (!bet_result.max_lose_amt) {
         best_bet = bet_result
         console.log('need to jump out of the loop. got the bet!!!!')
         return false;

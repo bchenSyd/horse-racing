@@ -9,7 +9,7 @@ import {
 
 
 debugger
-const fixed_prices = [4.1, 12, 4.1, 5.5, 6.5, 41]
+const fixed_prices = [3.9, 12, 4.1, 5.5, 6.5, 41]
 const init_bet_amt = 0.5 // start from $0.5
 setupBetting(fixed_prices, init_bet_amt)
 
