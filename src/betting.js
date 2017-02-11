@@ -91,7 +91,10 @@ function startBetting(totalBet = 20) {
 }
 
 function getBestBet() {
-    return best_bet
+    const market_rate = _(bet_slip).reduce((acc,val,index)=>{
+        return acc + 1/val.odds
+    },0)
+    return {...best_bet, market_rate}
 }
 
 export {

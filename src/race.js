@@ -9,7 +9,12 @@ import {
 
 
 debugger
-const fixed_prices = [3.9, 12, 4.1, 5.5, 6.5, 41]
+//"market_rate":1.0000267094017092 => can't find a none-lose bet
+const fixed_prices = [28.8,7,2.5,6.5,12.8,7.5,17.5] 
+
+//below the bet with market rate closest to 1.0 (0.999988), and we still can find a none-lose bet
+//const fixed_prices = [29.6,7,2.5,6.5,12.8,7.5,17.4]
+
 const init_bet_amt = 0.5 // start from $0.5
 setupBetting(fixed_prices, init_bet_amt)
 
