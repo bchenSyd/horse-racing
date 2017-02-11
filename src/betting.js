@@ -46,13 +46,14 @@ function iteration(bet_result) {
         }
         return acc
     }, bet_result)
-
+    bet_result.summary=`win ${bet_result.win.length} -- lose ${bet_result.lose.length}`
     console.log(`bet result: ${JSON.stringify(bet_result)}`)
 }
 
 
 function afterIteration(bet_result) {
     if (bet_result.max_lose_amt <= 0) {
+        best_bet = bet_result
         console.log('need to jump out of the loop. got the bet!!!!')
         return false;
     }
@@ -79,7 +80,7 @@ function isBestBet(bet_result) {
 }
 
 function startBetting(totalBet = 20) {
-    for (var i = 1; i < totalBet; i++) {
+    for (var i = 0; i < totalBet; i++) {
         var bet_result = setupIteration(i)
         iteration(bet_result)
         if (!afterIteration(bet_result)) {
