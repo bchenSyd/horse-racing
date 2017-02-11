@@ -14,11 +14,6 @@ const getMaxVal = (val1, val2) => {
     return result
 }
 
-const toFixed = val=>{
-    return Math.floor(val*100) / 100
-}
-
 export {
-    getMaxVal,
-    toFixed
+    getMaxVal
 }

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { toFixed, getMaxVal } from './utils'
+import { getMaxVal } from './utils'
 let bet_slip
 let bet_results = []
 let best_bet
@@ -29,7 +29,7 @@ function iteration(bet_result) {
     //iteratee is invoked with four arguments (accumulator, value, index|key, collection).
     bet_result = _(bet_slip).reduce((acc, val, index) => {
         const iter_payout = val.odds * val.amt
-        const iter_amt = toFixed(iter_payout - acc.total_bet_amt)
+        const iter_amt = parseFloat((iter_payout- acc.total_bet_amt).toFixed(2))
 
         //put horse into busket
         const result_busket = iter_amt >= 0 ? acc.win : acc.lose
