@@ -33,7 +33,7 @@ function iteration(bet_result) {
 
         //put horse into busket
         const result_busket = iter_amt >= 0 ? acc.win : acc.lose
-        result_busket.push({ horse_num: index + 1, odds: val.odds, potential_win_amt: iter_amt })
+        result_busket.push({ horse_num: index + 1, odds: val.odds, bet_amt:val.amt, potential_win_amt: iter_amt })
 
 
         //re-calculate the max lose amount;
