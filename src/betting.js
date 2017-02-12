@@ -3,6 +3,7 @@ import { getMaxVal } from './utils'
 let bet_slip
 let bet_results = []
 let best_bet
+let one_lose = []
 function setupBetting(priceList, init_bet_amt) {
     bet_slip = priceList.map(p => ({
         odds: p,
@@ -19,7 +20,8 @@ function setupIteration(index) {
         win: [],
         lose: [],
         max_lose_by: undefined,
-        max_lose_amt: undefined
+        max_lose_amt: undefined,
+        max_lose_ratio:undefined
     }
     bet_results.push(bet_result)
     return bet_result
@@ -42,6 +44,7 @@ function iteration(bet_result) {
             //console.log(`horse#${index}  (getMax(current_lose_amt:${iter_amt} , acc_lose_amt:${acc.amt}) ==>  returns:${maxLoseAmt}`)
             if (maxLoseAmt !== acc.max_lose_amt) {
                 acc.max_lose_amt = maxLoseAmt;
+                acc.max_lose_ratio = parseFloat((maxLoseAmt / acc.total_bet_amt).toFixed(2))
                 acc.max_lose_by = index + 1;
             }
         }
@@ -63,6 +66,14 @@ function afterIteration(bet_result) {
     bet_slip[index].amt += 0.5
 
     best_bet = isBestBet(bet_result) ? bet_result : best_bet
+    if(bet_result.lose.length === 1){
+        one_lose.push({
+            iteration:bet_result.iteration,
+            horse_num:bet_result.max_lose_by,
+            lose_amt: bet_result.max_lose_amt,
+            lose_ratio:bet_result.max_lose_ratio
+        })
+    }
     return true
 }
 
@@ -76,7 +87,7 @@ function isBestBet(bet_result) {
     }
 
     //bet_result.win.length == best_bet.win.length
-    return bet_result.max_lose_amt < best_bet.max_lose_amt
+    return bet_result.max_lose_ratio < best_bet.max_lose_ratio
 
 }
 
@@ -94,7 +105,7 @@ function getBestBet() {
     const market_rate = _(bet_slip).reduce((acc,val,index)=>{
         return acc + 1/val.odds
     },0)
-    return {...best_bet, market_rate}
+    return [{...best_bet, market_rate},{total: one_lose.length, one_lose}]
 }
 
 export {
