@@ -28,9 +28,17 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title:'horse racing',
+      title: 'horse racing',
       filename: 'index.html'
-    })
+    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     pure_getters: true,
+    //     unsafe: true,
+    //     unsafe_comps: true,
+    //     warnings: false
+    //   }
+    // })
   ],
   module: {
     loaders: loaders
