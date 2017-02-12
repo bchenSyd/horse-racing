@@ -23,7 +23,7 @@ module.exports = {
   entry: path.resolve('src', 'index.js'),
   output: {
     path: path.resolve('dist'),
-    filename: '[name].js',
+    filename: 'bundle.js',
     publicPath: '/'
   },
   plugins: [

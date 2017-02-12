@@ -1,3 +1,5 @@
+http://horse-racing.azurewebsites.net/
+
 //below the bet with market rate closest to 1.0 (0.999988), and we still can find a none-lose bet
 const fixed_prices = [29.6,7,2.5,6.5,12.8,7.5,17.4]
 {
