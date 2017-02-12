@@ -4,10 +4,12 @@ let bet_slip
 let bet_results = []
 let best_bet
 let one_lose = []
+let price_facto
 function setupBetting(priceList, init_bet_amt) {
+    price_facto = init_bet_amt
     bet_slip = priceList.map(p => ({
         odds: p,
-        amt: init_bet_amt
+        amt: price_facto
     }))
 }
 function setupIteration(index) {
@@ -63,7 +65,7 @@ function afterIteration(bet_result) {
     }
 
     const index = bet_result.max_lose_by - 1 //zero-indexed
-    bet_slip[index].amt += 0.5
+    bet_slip[index].amt += price_facto
 
     best_bet = isBestBet(bet_result) ? bet_result : best_bet
     if(bet_result.lose.length === 1){

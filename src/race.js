@@ -9,15 +9,9 @@ import {
 
 
 debugger
-//"market_rate":1.0000267094017092 => can't find a none-lose bet
-//const fixed_prices = [28.8,7,2.5,6.5,12.8,7.5,17.5] 
-
-//below the bet with market rate closest to 1.0 (0.999988), and we still can find a none-lose bet
-//const fixed_prices = [29.6,7,2.5,6.5,12.8,7.5,17.4]
-
-
-const fixed_prices = [29.6,7,2.5,6.5,12.8,7.5,17.4]
-const init_bet_amt = 0.5 // start from $0.5
+//const fixed_prices = [4.99,1.67,4.99] //20% -- 60% -- 20% => inflate by -0.04% => iteration #331, amt $334
+const fixed_prices = [4.99,1.67,4.98] //20% -- 60% -- 20% => inflate by +0.00064% => no safe bet solution. best bet: iteration #96, amt $99, max_lose:$0.47, max_win:$0.8
+const init_bet_amt = 1 // start from $1
 setupBetting(fixed_prices, init_bet_amt)
 
 var argvIndex = process.argv.indexOf('--total-bet')
